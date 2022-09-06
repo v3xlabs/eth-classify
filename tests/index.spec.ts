@@ -1,6 +1,20 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { hello } from '../src';
+import { setupClassifier } from '../src';
+import { MODULES } from './../src/modules';
 
-it('exports', () => {
-    expect(hello);
+it('exports', async () => {
+    const classify = setupClassifier({
+        modules: [
+            MODULES.ENS,
+            MODULES.Superfluid,
+        ],
+    });
+    
+    const result = await classify();
+    
+    switch(result.type) {
+        case 'ens': {
+            expect(result.action).toBe('');
+        }
+    }
 });

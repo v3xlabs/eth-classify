@@ -18,6 +18,7 @@
         "jest": "^28.1.1",
         "ts-jest": "^28.0.5",
         "ts-node": "^10.8.1",
+        "ts-node-dev": "^2.0.0",
         "typescript": "^4.7.4"
     },
     "scripts": {
@@ -25,5 +26,9 @@
         "test": "jest --verbose --coverage",
         "lint": "eslint -c .eslintrc.json --ext .ts ./src",
         "pub": "pnpm publish --no-git-checks"
+    },
+    "dependencies": {
+        "alchemy-sdk": "^2.0.3",
+        "ethers": "^5.7.0"
     }
 }
