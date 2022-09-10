@@ -1,14 +1,17 @@
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { TransactionModule } from '../..';
 
 export type ENSTransaction = { type: 'ens' } & (
     | {
           action: 'reclaim';
-          data: {};
+          data: {
+              owner: string;
+              id: BigNumber;
+          };
       }
     | {
-          action: 'test';
-          data: {};
+          action: 'unknown';
+          data: undefined;
       }
 );
 

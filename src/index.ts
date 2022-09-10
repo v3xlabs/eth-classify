@@ -11,7 +11,7 @@ type ClassifiedTransaction = {
     }
 };
 
-type UnknownTransaction = {
+export type UnknownTransaction = {
     type: 'unknown';
     action: '';
     data: undefined;
@@ -61,5 +61,5 @@ export const setupClassifier = <K extends TransactionModule<ClassifiedTransactio
     
     const result = await classify(tx);
 
-    console.log({result, arguments: result.data});
+    console.log({result, data: result.data});
 })()
