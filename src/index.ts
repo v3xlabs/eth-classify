@@ -11,6 +11,12 @@ type ClassifiedTransaction = {
     }
 };
 
+type UnknownTransaction = {
+    type: 'unknown';
+    action: '';
+    data: undefined;
+}
+
 export type TransactionModule<K extends ClassifiedTransaction> = {
     check: (tx: TransactionResponse) => Awaitable<boolean>;
     resolve: (tx: TransactionResponse, provider: ethers.Signer | ethers.providers.Provider | undefined) => Awaitable<K>;
@@ -25,7 +31,7 @@ export const setupClassifier = <K extends TransactionModule<ClassifiedTransactio
     return (tx: TransactionResponse) => {
         for (const module of config.modules) {
             if (module.check(tx)) {
-                return module.resolve(tx, config.provider);
+                return module.resolve(tx, config.provider) as ReturnType<K['resolve']>;
             }
         }
         // return {} as ReturnType<K['resolve']>;
@@ -33,7 +39,7 @@ export const setupClassifier = <K extends TransactionModule<ClassifiedTransactio
             type: 'unknown',
             action: '',
             data: undefined,
-        }
+        } as UnknownTransaction;
     };
 };
 
