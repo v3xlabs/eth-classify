@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { CHAINS } from '../../chains';
 import { contractAddresses, contracts, CONTRACTS } from './data';
 import { ENSModule } from './types';
 
@@ -24,7 +25,8 @@ const resolveETHBaseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
 
 export const ENS: ENSModule = {
     check: (tx) => {
-        console.log(tx.to);
+        if (tx.chainId !== CHAINS.ETH_MAINNET) return false;
+
         return tx.to ? contractAddresses.includes(tx.to) : false;
     },
     resolve: async (tx, provider) => {
