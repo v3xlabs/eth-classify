@@ -1,4 +1,4 @@
-import { ENS } from './ens';
+import { ENS } from './ens/ens';
 import { Superfluid } from './superfluid';
 
 export const MODULES = {

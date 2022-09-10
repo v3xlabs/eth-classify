@@ -28,6 +28,7 @@
         "pub": "pnpm publish --no-git-checks"
     },
     "dependencies": {
+        "@ethersproject/abstract-provider": "^5.7.0",
         "alchemy-sdk": "^2.0.3",
         "ethers": "^5.7.0"
     }
