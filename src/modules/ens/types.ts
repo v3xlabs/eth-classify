@@ -1,7 +1,14 @@
 import { BigNumber, ethers } from 'ethers';
 import { TransactionModule } from '../..';
 
-export type ENSTransaction = { type: 'ens' } & (
+type BaseRegistrar =
+    | {
+          action: 'approve';
+          data: {
+              to: string;
+              tokenId: BigNumber;
+          };
+      }
     | {
           action: 'reclaim';
           data: {
@@ -10,9 +17,63 @@ export type ENSTransaction = { type: 'ens' } & (
           };
       }
     | {
+          action: 'safeTransferFrom';
+          data: {
+              from: string;
+              to: string;
+              tokenId: BigNumber;
+          };
+      }
+    | {
+          action: 'transferFrom';
+          data: {
+              from: string;
+              to: string;
+              tokenId: BigNumber;
+          };
+      };
+
+type Registrar =
+    | {
+          action: 'register';
+          data: {
+              value: BigNumber;
+              name: string;
+              owner: string;
+              duration: BigNumber;
+              secret: string;
+          };
+      }
+    | {
+          action: 'registerWithConfig';
+          data: {
+              value: BigNumber;
+              name: string;
+              owner: string;
+              duration: BigNumber;
+              secret: string;
+              resolver: string;
+              addr: string;
+          };
+      }
+    | {
+          action: 'renew';
+          data: {
+              value: BigNumber;
+              name: string;
+              duration: BigNumber;
+          };
+      };
+
+export type ENSTransaction = { type: 'ens' } & (
+    | BaseRegistrar
+    | Registrar
+    | {
           action: 'unknown';
           data: undefined;
       }
 );
+
+type test = ENSTransaction['action'];
 
 export type ENSModule = TransactionModule<ENSTransaction>;

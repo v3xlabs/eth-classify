@@ -14,9 +14,18 @@ const resolveETHBaseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
 
     const functionName = parsedTransaction.functionFragment.name;
 
-    const {args} = parsedTransaction;
+    const { args } = parsedTransaction;
 
     switch (functionName) {
+        case 'approve':
+            return {
+                type: 'ens',
+                action: 'approve',
+                data: {
+                    to: args.to as string,
+                    tokenId: args.tokenId as BigNumber,
+                },
+            };
         case 'reclaim':
             return {
                 type: 'ens',
@@ -25,25 +34,103 @@ const resolveETHBaseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
                     owner: args.owner as string,
                     id: args.id as BigNumber,
                 },
-            }
-        
-        // TODO: add other functions
-    
+            };
+        case 'safeTransferFrom':
+            return {
+                type: 'ens',
+                action: 'safeTransferFrom',
+                data: {
+                    from: args.from as string,
+                    to: args.to as string,
+                    tokenId: args.tokenId as BigNumber,
+                },
+            };
+        case 'transferFrom':
+            return {
+                type: 'ens',
+                action: 'transferFrom',
+                data: {
+                    from: args.from as string,
+                    to: args.to as string,
+                    tokenId: args.tokenId as BigNumber,
+                },
+            };
+
         default:
             return {
                 type: 'ens',
                 action: 'unknown',
                 data: undefined,
-            }
+            };
     }
+};
 
-    // return {
-    //     type: 'ens',
-    //     action: parsedTransaction.functionFragment.name,
-    //     data: {
-    //         arguments: parsedTransaction.args,
-    //     },
-    // };
+const resolveETHRegistrarController: ENSModule['resolve'] = async (
+    tx,
+    provider
+) => {
+    const ETHRegistrarController = new ethers.Contract(
+        CONTRACTS.ETHRegistrarController,
+        contracts[CONTRACTS.ETHRegistrarController].abi,
+        provider
+    );
+
+    const parsedTransaction =
+        ETHRegistrarController.interface.parseTransaction(tx);
+
+    console.log({ parsedTransaction });
+
+    const functionName = parsedTransaction.functionFragment.name;
+
+    const { args } = parsedTransaction;
+
+    switch (functionName) {
+        case 'register':
+            return {
+                type: 'ens',
+                action: 'register',
+                data: {
+                    value: parsedTransaction.value,
+                    name: args.name as string,
+                    owner: args.owner as string,
+                    duration: args.duration as BigNumber,
+                    secret: args.secret as string,
+                },
+            };
+
+        case 'registerWithConfig':
+            return {
+                type: 'ens',
+                action: 'registerWithConfig',
+                data: {
+                    value: parsedTransaction.value,
+                    name: args.name as string,
+                    owner: args.owner as string,
+                    duration: args.duration as BigNumber,
+                    secret: args.secret as string,
+                    resolver: args.resolver as string,
+                    addr: args.addr as string,
+                },
+            };
+
+        case 'renew':
+            return {
+                type: 'ens',
+                action: 'renew',
+                data: {
+                    value: parsedTransaction.value,
+                    name: args.name as string,
+                    duration: args.duration as BigNumber,
+                },
+            };
+
+        default:
+            return {
+                type: 'ens',
+                action: 'unknown',
+                data: undefined,
+            };
+    }
 };
 
 export const ENS: ENSModule = {
@@ -56,6 +143,10 @@ export const ENS: ENSModule = {
         switch (tx.to) {
             case CONTRACTS.ETHBaseRegistrar:
                 return resolveETHBaseRegistrar(tx, provider);
+
+            case CONTRACTS.ETHRegistrarController:
+                return resolveETHRegistrarController(tx, provider);
+
             default:
                 throw new Error();
         }
