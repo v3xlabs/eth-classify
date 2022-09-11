@@ -1,4 +1,4 @@
-import { TransactionModule } from "..";
+import { TransactionModule } from '../types/classifer';
 
 type SuperfluidTransaction = { type: "superfluid"; action: ""; data: {} };
 

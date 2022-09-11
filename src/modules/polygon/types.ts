@@ -1,5 +1,5 @@
 import { ethers, BigNumber } from 'ethers';
-import { TransactionModule } from '../..';
+import { TransactionModule } from '../../types/classifer';
 
 export type PolygonTransaction = { type: 'polygon' } & (
     | {
