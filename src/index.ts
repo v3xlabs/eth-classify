@@ -1,9 +1,9 @@
-import { ethers, Transaction } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { MODULES } from './modules';
 type Awaitable<K> = Promise<K> | K;
 
-type ClassifiedTransaction = {
+export type ClassifiedTransaction = {
     type: string; // 'ens'
     action: string; // 'register | renew'
     data?: {
@@ -43,23 +43,23 @@ export const setupClassifier = <K extends TransactionModule<ClassifiedTransactio
     };
 };
 
-(async () => {
-    const provider = ethers.providers.getDefaultProvider('homestead');
+// (async () => {
+//     const provider = ethers.providers.getDefaultProvider('homestead');
 
-    const classify = setupClassifier({
-        modules: [
-            MODULES.ENS,
-            MODULES.Superfluid,
-        ],
-        provider,
-    });
+//     const classify = setupClassifier({
+//         modules: [
+//             MODULES.ENS,
+//             MODULES.Superfluid,
+//         ],
+//         provider,
+//     });
 
 
-    // const tx = await provider.getTransaction('0x4ac8f09f97f0fd8087c613ba71ac7fa1e1e3ccacb1854f5b2913d073ea418fc2');
-    // const tx = await provider.getTransaction('0xf9eb3f5d85502645759cc6f45805093d023ecbd83d19fea5254a42e591264e08');
-    const tx = await provider.getTransaction('0xc3218dfd8d45600e7a1d86f2d382798dd21c31343e189288f15cfcc7db19c147');
+//     // const tx = await provider.getTransaction('0x4ac8f09f97f0fd8087c613ba71ac7fa1e1e3ccacb1854f5b2913d073ea418fc2');
+//     // const tx = await provider.getTransaction('0xf9eb3f5d85502645759cc6f45805093d023ecbd83d19fea5254a42e591264e08');
+//     const tx = await provider.getTransaction('0x7a1ad4e6cc19638831b96e5189fc8324d1daf432b8cb9a232c19505c44bebae1');
     
-    const result = await classify(tx);
+//     const result = await classify(tx);
 
-    console.log({result, data: result.data});
-})()
+//     console.log({result});
+// })
