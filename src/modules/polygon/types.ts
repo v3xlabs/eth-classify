@@ -1,15 +1,31 @@
-import { ethers } from 'ethers';
+import { ethers, BigNumber } from 'ethers';
 import { TransactionModule } from '../..';
 
 export type PolygonTransaction = { type: 'polygon' } & (
     | {
-          action: 'reclaim';
+          action: 'depositFor';
           data: {
-            owner: string;
+              user: string;
+              rootToken: string;
+
+              // TODO: Parse opaque depositData
+              // depositData: string;
           };
       }
     | {
-          action: 'test';
+          action: 'depositEtherFor';
+          data: {
+              value: BigNumber;
+              user: string;
+          };
+      }
+    | {
+          action: 'exit';
+          // TODO: Parse opaque data
+          data: {};
+      }
+    | {
+          action: 'unknown';
           data: undefined;
       }
 );
