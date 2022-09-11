@@ -4,6 +4,8 @@ import { MODULES } from '../../src/modules';
 import { ENSTransaction } from '../../src/modules/ens/types';
 import { ModuleTest } from '../type';
 
+jest.setTimeout(10_000);
+
 const ensTests: ModuleTest<ENSTransaction> = {
     // Base Registrar
     approve: [
