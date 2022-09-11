@@ -35,6 +35,12 @@ type BaseRegistrar =
 
 type Registrar =
     | {
+          action: 'commit';
+          data: {
+              commitment: string;
+          };
+      }
+    | {
           action: 'register';
           data: {
               value: BigNumber;

@@ -85,6 +85,15 @@ const resolveETHRegistrarController: ENSModule['resolve'] = async (
     const { args } = parsedTransaction;
 
     switch (functionName) {
+        case 'commit':
+            return {
+                type: 'ens',
+                action: 'commit',
+                data: {
+                    commitment: args.commitment as string,
+                },
+            };
+
         case 'register':
             return {
                 type: 'ens',
