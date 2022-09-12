@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from 'ethers';
+
 import { CHAINS } from '../../chains';
-import { contractAddresses, contracts, CONTRACTS } from './data';
+import { contractAddresses, CONTRACTS, contracts } from './data';
 import { ENSModule } from './types';
 
 const resolveETHBaseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
@@ -82,7 +83,7 @@ const resolveETHRegistrarController: ENSModule['resolve'] = async (
 
     const functionName = parsedTransaction.functionFragment.name;
 
-    const { args } = parsedTransaction;
+    const { args, value } = parsedTransaction;
 
     switch (functionName) {
         case 'commit':
@@ -99,7 +100,7 @@ const resolveETHRegistrarController: ENSModule['resolve'] = async (
                 type: 'ens',
                 action: 'register',
                 data: {
-                    value: parsedTransaction.value,
+                    value: value,
                     name: args.name as string,
                     owner: args.owner as string,
                     duration: args.duration as BigNumber,
@@ -112,7 +113,7 @@ const resolveETHRegistrarController: ENSModule['resolve'] = async (
                 type: 'ens',
                 action: 'registerWithConfig',
                 data: {
-                    value: parsedTransaction.value,
+                    value: value,
                     name: args.name as string,
                     owner: args.owner as string,
                     duration: args.duration as BigNumber,
@@ -127,7 +128,7 @@ const resolveETHRegistrarController: ENSModule['resolve'] = async (
                 type: 'ens',
                 action: 'renew',
                 data: {
-                    value: parsedTransaction.value,
+                    value: value,
                     name: args.name as string,
                     duration: args.duration as BigNumber,
                 },
@@ -157,7 +158,7 @@ export const ENS: ENSModule = {
                 return resolveETHRegistrarController(tx, provider);
 
             default:
-                throw new Error();
+                throw new Error('Invalid ENS resolution');
         }
     },
 };

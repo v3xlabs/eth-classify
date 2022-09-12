@@ -1,4 +1,5 @@
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber } from 'ethers';
+
 import { TransactionModule } from '../../types/classifer';
 
 type BaseRegistrar =

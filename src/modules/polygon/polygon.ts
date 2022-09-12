@@ -1,8 +1,9 @@
 // CONTRACT: https://etherscan.io/address/0xa0c68c638235ee32657e8f720a23cec1bfc77c77
 
-import { maticBridgeAddress } from './data';
-import { BigNumber, ethers } from 'ethers';
+import { ethers } from 'ethers';
+
 import { CHAINS } from '../../chains';
+import { maticBridgeAddress } from './data';
 import { maticBridgeABI } from './data';
 import { PolygonModule } from './types';
 
@@ -26,7 +27,7 @@ export const Polygon: PolygonModule = {
 
         const functionName = parsedTransaction.functionFragment.name;
 
-        const { args } = parsedTransaction;
+        const { args, value } = parsedTransaction;
 
         switch (functionName) {
             case 'depositFor':
@@ -46,7 +47,7 @@ export const Polygon: PolygonModule = {
                     type: 'polygon',
                     action: 'depositEtherFor',
                     data: {
-                        value: parsedTransaction.value,
+                        value: value,
                         user: args.user as string,
                     },
                 };
