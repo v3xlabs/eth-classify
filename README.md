@@ -125,7 +125,7 @@ const ourAsyncFunction = async () => {
     const data = await classify(tx);
 
     console.log(data);
-}
+};
 
 ourAsyncFunction();
 ```
