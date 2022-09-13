@@ -23,7 +23,7 @@ Classify Ethereum Transactions
 - [Installation](#installation)
 - [Usage](#usage)
   - [Quickstart](#quickstart)
-- [Documentation](#documentation)
+- [Writing a module](#writing-a-module)
 - [Contributors](#contributors)
 - [LICENSE](#license)
 
@@ -124,9 +124,8 @@ const ourAsyncFunction = async () => {
 ourAsyncFunction();
 ```
 
-## Documentation
-
-Comming soon
+## Writing a module
+...
 
 ## Contributors
 
