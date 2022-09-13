@@ -4,6 +4,8 @@ import { CHAINS } from '../../chains';
 import { contractAddresses, CONTRACTS, contracts } from './data';
 import { ENSModule } from './types';
 
+// TODO implement reverse registrar https://etherscan.io/address/0x084b1c3c81545d370f3634392de611caabff8148
+
 const resolveETHBaseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
     const ETHBaseRegistrar = new ethers.Contract(
         CONTRACTS.ETHBaseRegistrar,
