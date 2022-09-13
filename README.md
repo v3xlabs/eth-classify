@@ -6,15 +6,15 @@
 </p>
 
 <p align="center">
-<a href="https://bundlephobia.com/package/eth-classify" alt="Bundlephobia">
+<a href="https://bundlephobia.com/package/eth-classify" alt="Bundlephobia" target="_blank">
     <img src="https://img.shields.io/bundlephobia/min/eth-classify.svg" />
 </a>
 <img src="https://img.shields.io/badge/coverage-100%25-brightgreen.svg" />
 <img src="https://img.shields.io/github/languages/top/v3xlabs/eth-classify" />
-<a href="https://www.npmjs.com/package/eth-classify" alt="eth-classify NPM">
+<a href="https://www.npmjs.com/package/eth-classify" alt="eth-classify NPM" target="_blank">
     <img src="https://img.shields.io/badge/dependencies-0-brightgreen.svg" />
 </a>
-<a href="https://www.npmjs.com/package/eth-classify" alt="eth-classify NPM">
+<a href="https://www.npmjs.com/package/eth-classify" alt="eth-classify NPM" target="_blank">
     <img src="https://img.shields.io/npm/dt/eth-classify" />
 </a>
 </p>
