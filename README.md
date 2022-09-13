@@ -21,6 +21,8 @@ Classify Ethereum Transactions
 
 - [Table of Contents](#table-of-contents)
 - [Installation](#installation)
+- [Usage](#usage)
+  - [Quickstart](#quickstart)
 - [Documentation](#documentation)
 - [Contributors](#contributors)
 - [LICENSE](#license)
@@ -43,6 +45,83 @@ or if you prefer to use the `pnpm` package manager:
 
 ```sh
 pnpm add eth-classify
+```
+
+## Usage
+
+Getting started using `eth-classify` is very easy. We start by creating our classifier with the modules we want to use and a provider from ethers.js:
+
+```ts
+const provider = ethers.providers.getDefaultProvider('homestead');
+
+const classify = setupClassifier({
+    modules: [MODULES.ENS, MODULES.Polygon],
+    provider,
+});
+```
+
+Before we can classify we need to have a ethers.js transaction to classify.
+
+```ts
+const tx = await provider.getTransaction(
+        '0xf9eb3f5d85502645759cc6f45805093d023ecbd83d19fea5254a42e591264e08'
+    );
+```
+
+When we have our transaction we can classify it:
+
+```ts
+const data = await classify(tx);
+
+console.log(data);
+```
+
+Result:
+
+```js
+{
+  type: 'ens',
+  action: 'registerWithConfig',
+  data: {
+    value: BigNumber,
+    name: 'v3xlabs',
+    owner: '0x225f137127d9067788314bc7fcc1f36746a3c3B5',
+    duration: BigNumber,
+    secret: '0x95319a2f72445a5097e248ed089b085dc61da9e0c9d1f6e8c887433e816f1c18',
+    resolver: '0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41',
+    addr: '0x225f137127d9067788314bc7fcc1f36746a3c3B5'
+  }
+}
+```
+
+### Quickstart
+
+Throwing all of the above together would look something like this:
+
+```ts
+import { ethers } from 'ethers';
+
+import { setupClassifier } from 'eth-classify';
+import { MODULES } from 'eth-classify/modules';
+
+const provider = ethers.providers.getDefaultProvider('homestead');
+
+const classify = setupClassifier({
+    modules: [MODULES.ENS, MODULES.Polygon],
+    provider,
+});
+
+const ourAsyncFunction = async () => {
+    const tx = await provider.getTransaction(
+        '0xf9eb3f5d85502645759cc6f45805093d023ecbd83d19fea5254a42e591264e08'
+    );
+
+    const data = await classify(tx);
+
+    console.log(data);
+}
+
+ourAsyncFunction();
 ```
 
 ## Documentation
