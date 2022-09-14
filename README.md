@@ -30,6 +30,9 @@ Classify Ethereum Transactions
 - [Usage](#usage)
   - [Quickstart](#quickstart)
 - [Writing a module](#writing-a-module)
+  - [Check function](#check-function)
+  - [Resolve function](#resolve-function)
+  - [Example](#example)
 - [Contributors](#contributors)
 - [LICENSE](#license)
 
@@ -131,7 +134,66 @@ ourAsyncFunction();
 ```
 
 ## Writing a module
-...
+
+The two basic parts of a module is the `check` function and the `resolve` function. The `check` function is used to check if the transaction is of the type that the module is for. The `resolve` function is used to parse the transaction data into a more readable format.
+
+### Check function
+The check function takes in an argument of type `TransactionResponse` from ethers.js and returns a boolean. If the transaction is of the type that the module is for it should return `true` otherwise it should return `false`.
+
+When the check function returns true, the module finder stops and the resolve function is called.
+
+### Resolve function
+
+The resolve function takes in an argument of type `TransactionResponse` from ethers.js and also an ethers.js provider. It then returns either a promise containing the data or the data itself. The data should be an object following the following type:
+
+```ts
+type ClassifiedTransaction = {
+    type: string; // 'ourModule'
+    action: string; // 'anAction'
+    data?: {
+        // custom type
+    };
+};
+```
+
+### Example
+
+```ts
+export type OurTransaction = {
+    type: "ourModule";
+    action: "anAction";
+    data: {
+        field1: string;
+        field2: string;
+    };
+};
+
+export type OurModule = TransactionModule<OurTransaction>;
+
+export const TestModule: OurModule = {
+    check: (tx) => {
+        // Only allow mainnet
+        if (tx.chainId !== CHAINS.ETH_MAINNET) return false;
+
+        // Check if the transaction is going to our contract
+        return tx.to?.toLowerCase() === "CONTRACT_ADDRESS".toLowerCase();
+    },
+    resolve: async (tx, provider) => {
+        // Parse the transaction data
+
+        // Return in the standardized format
+        return {
+            type: "ourModule",
+            action: "anAction",
+            data: {
+                field1: "value1",
+                field2: "value2",
+            },
+        };
+    },
+};
+```
+
 
 ## Contributors
 
