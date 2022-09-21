@@ -1,11 +1,13 @@
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber } from 'ethers';
 
 import { setupClassifier } from '../../src';
 import { MODULES } from '../../src/modules';
 import { ENSTransaction } from '../../src/modules/ens/types';
 import { ModuleTest } from '../type';
+import { provider } from '../util';
+import { sleep } from './../util';
 
-jest.setTimeout(10_000);
+jest.setTimeout(60_000);
 
 const ensTests: ModuleTest<ENSTransaction> = {
     // Base Registrar
@@ -118,7 +120,6 @@ const ensTests: ModuleTest<ENSTransaction> = {
         ],
     ],
 };
-const provider = ethers.providers.getDefaultProvider('homestead');
 
 const classify = setupClassifier({
     modules: [MODULES.ENS],
@@ -134,6 +135,8 @@ for (const [action, tests] of Object.entries(ensTests)) {
                 const result = await classify(tx);
 
                 expect(result.data).toEqual(test);
+
+                await sleep(500);
             });
         }
     });

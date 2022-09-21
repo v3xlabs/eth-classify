@@ -1,8 +1,10 @@
-import { PolygonTransaction } from './../../src/modules/polygon/types';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber } from 'ethers';
+
 import { setupClassifier } from '../../src';
 import { MODULES } from '../../src/modules';
 import { ModuleTest } from '../type';
+import { provider, sleep } from '../util';
+import { PolygonTransaction } from './../../src/modules/polygon/types';
 
 jest.setTimeout(10_000);
 
@@ -34,7 +36,6 @@ const polygonTests: ModuleTest<PolygonTransaction> = {
         ],
     ],
 };
-const provider = ethers.providers.getDefaultProvider('homestead');
 
 const classify = setupClassifier({
     modules: [MODULES.Polygon],
@@ -50,6 +51,7 @@ for (const [action, tests] of Object.entries(polygonTests)) {
                 const result = await classify(tx);
 
                 expect(result.data).toEqual(test);
+                await sleep(500);
             });
         }
     });
