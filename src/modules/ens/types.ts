@@ -72,9 +72,17 @@ type Registrar =
           };
       };
 
+type ReverseRegistrar = {
+    action: 'setReverseName';
+    data: {
+        name: string;
+    };
+};
+
 export type ENSTransaction = { type: 'ens' } & (
     | BaseRegistrar
     | Registrar
+    | ReverseRegistrar
     | {
           action: 'unknown';
           data: undefined;

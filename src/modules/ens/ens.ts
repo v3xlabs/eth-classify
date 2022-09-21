@@ -68,6 +68,38 @@ const resolveETHBaseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
     }
 };
 
+const resolveETHReverseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
+    const ETHReverseRegistrar = new ethers.Contract(
+        CONTRACTS.ETHReverseRegistrar,
+        contracts[CONTRACTS.ETHReverseRegistrar].abi,
+        provider
+    );
+
+    const parsedTransaction = ETHReverseRegistrar.interface.parseTransaction(tx);
+
+    const functionName = parsedTransaction.functionFragment.name;
+
+    const { args } = parsedTransaction;
+
+    switch (functionName) {
+        case 'setName':
+            return {
+                type: 'ens',
+                action: 'setReverseName',
+                data: {
+                    name: args.name as string,
+                },
+            };
+
+        default:
+            return {
+                type: 'ens',
+                action: 'unknown',
+                data: undefined,
+            };
+    }
+};
+
 const resolveETHRegistrarController: ENSModule['resolve'] = async (
     tx,
     provider
@@ -158,6 +190,9 @@ export const ENS: ENSModule = {
 
             case CONTRACTS.ETHRegistrarController:
                 return resolveETHRegistrarController(tx, provider);
+
+            case CONTRACTS.ETHReverseRegistrar:
+                return resolveETHReverseRegistrar(tx, provider);
 
             default:
                 throw new Error('Invalid ENS resolution');
