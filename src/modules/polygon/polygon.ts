@@ -23,7 +23,7 @@ export const Polygon: PolygonModule = {
         const parsedTransaction =
             MaticBridgeContract.interface.parseTransaction(tx);
 
-        console.log({ parsedTransaction });
+        // console.log({ parsedTransaction });
 
         const functionName = parsedTransaction.functionFragment.name;
 

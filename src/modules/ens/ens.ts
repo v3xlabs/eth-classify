@@ -68,14 +68,18 @@ const resolveETHBaseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
     }
 };
 
-const resolveETHReverseRegistrar: ENSModule['resolve'] = async (tx, provider) => {
+const resolveETHReverseRegistrar: ENSModule['resolve'] = async (
+    tx,
+    provider
+) => {
     const ETHReverseRegistrar = new ethers.Contract(
         CONTRACTS.ETHReverseRegistrar,
         contracts[CONTRACTS.ETHReverseRegistrar].abi,
         provider
     );
 
-    const parsedTransaction = ETHReverseRegistrar.interface.parseTransaction(tx);
+    const parsedTransaction =
+        ETHReverseRegistrar.interface.parseTransaction(tx);
 
     const functionName = parsedTransaction.functionFragment.name;
 
@@ -113,7 +117,7 @@ const resolveETHRegistrarController: ENSModule['resolve'] = async (
     const parsedTransaction =
         ETHRegistrarController.interface.parseTransaction(tx);
 
-    console.log({ parsedTransaction });
+    // console.log({ parsedTransaction });
 
     const functionName = parsedTransaction.functionFragment.name;
 
