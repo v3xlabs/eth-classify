@@ -1,4 +1,5 @@
 import { BigNumber, ethers } from 'ethers';
+
 import { setupClassifier } from '../../src';
 import { MODULES } from '../../src/modules';
 import { ENSTransaction } from '../../src/modules/ens/types';
@@ -104,6 +105,15 @@ const ensTests: ModuleTest<ENSTransaction> = {
                 value: BigNumber.from('8000000000000000'),
                 name: '_8790',
                 duration: BigNumber.from('15778800'),
+            },
+        ],
+    ],
+
+    setReverseName: [
+        [
+            '0x5f61a12a1256a94b91f7a80f3d7ef730404886365f508f98ea8d67d07cf88e9b',
+            {
+                name: 'markgjones.eth',
             },
         ],
     ],
