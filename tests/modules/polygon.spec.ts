@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import { setupClassifier } from '../../src';
 import { MODULES } from '../../src/modules';
 import { ModuleTest } from '../type';
-import { provider, sleep } from '../util';
+import { homesteadProvider, sleep } from '../util';
 import { PolygonTransaction } from './../../src/modules/polygon/types';
 
 jest.setTimeout(10_000);
@@ -39,14 +39,14 @@ const polygonTests: ModuleTest<PolygonTransaction> = {
 
 const classify = setupClassifier({
     modules: [MODULES.Polygon],
-    provider,
+    provider: homesteadProvider,
 });
 
 for (const [action, tests] of Object.entries(polygonTests)) {
     describe(action, () => {
         for (const [address, test] of tests) {
             it(address, async () => {
-                const tx = await provider.getTransaction(address);
+                const tx = await homesteadProvider.getTransaction(address);
 
                 const result = await classify(tx);
 

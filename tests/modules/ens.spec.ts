@@ -4,7 +4,7 @@ import { setupClassifier } from '../../src';
 import { MODULES } from '../../src/modules';
 import { ENSTransaction } from '../../src/modules/ens/types';
 import { ModuleTest } from '../type';
-import { provider } from '../util';
+import { homesteadProvider } from '../util';
 import { sleep } from './../util';
 
 jest.setTimeout(60_000);
@@ -123,14 +123,14 @@ const ensTests: ModuleTest<ENSTransaction> = {
 
 const classify = setupClassifier({
     modules: [MODULES.ENS],
-    provider,
+    provider: homesteadProvider,
 });
 
 for (const [action, tests] of Object.entries(ensTests)) {
     describe(action, () => {
         for (const [address, test] of tests) {
             it(address, async () => {
-                const tx = await provider.getTransaction(address);
+                const tx = await homesteadProvider.getTransaction(address);
 
                 const result = await classify(tx);
 
