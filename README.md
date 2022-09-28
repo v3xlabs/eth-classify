@@ -26,15 +26,28 @@ Classify Ethereum Transactions
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
+- [About](#about)
+  - [How it's made](#how-its-made)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Quickstart](#quickstart)
+  - [InteliSense](#intelisense)
 - [Writing a module](#writing-a-module)
   - [Check function](#check-function)
   - [Resolve function](#resolve-function)
   - [Example](#example)
 - [Contributors](#contributors)
 - [LICENSE](#license)
+
+## About
+The eth-classify project aims to aid in the development of projects as a universal standard way to classify various Ethereum transactions through the use of built-in and 3rd party modules. A common use case for eth-classify is for wallets where you want detailed records of past transactions.
+
+eth-classify's main use case is translating Ethereum transactions into a standardized format that can be used to create a beautiful front-end UI.
+
+### How it's made
+eth-classify is built on top of ethers.js which provides a solid base for the functions of the library. The library is made out of the central function (setupClassifier) that creates the classify function based on the input into it.
+
+The classify function built using the function builder selects the appropriate module from the module list added on setup. This is done via each module's check function which is the logic in charge of selecting the proper module to resolve with. Once a module has been selected, the module-specific code is run to parse and retrieve the correct information to then be returned.
 
 ## Installation
 
@@ -132,6 +145,13 @@ const ourAsyncFunction = async () => {
 
 ourAsyncFunction();
 ```
+
+### InteliSense
+
+eth-classify is built with TypeScript and has full InteliSense support. This means that you can get full InteliSense support for the modules you are using.
+
+<!-- insert image -->
+![InteliSense](public/IntelliSense.gif)
 
 ## Writing a module
 
